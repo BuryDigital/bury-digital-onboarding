@@ -351,13 +351,59 @@ async function handleSubmit(e){
   };
 
   try{
-    const res=await fetch('https://formsubmit.co/ajax/oscar@bury-digital.com',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify(payload)
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: '3b6d96a7-d24a-4bed-bdf7-73c454c2cb2d',
+        subject: 'New Onboarding — ' + businessName,
+        from_name: businessName,
+        botcheck: '',
+        'Business name': val('q11'),
+        'Your name': val('q13'),
+        'Phone': val('q12'),
+        'Email': val('q14'),
+        'Industry': val('q15'),
+        'Service area': val('q16'),
+        'SIM provider': val('q17'),
+        'Days': getDays(),
+        'Start time': val('q22a'),
+        'End time': val('q22b'),
+        'Timezone': val('q23'),
+        'After hours': getSel('afterhours'),
+        'After hours message': val('q24'),
+        'Services offered': val('q31'),
+        'Does not do': val('q32'),
+        'Opening line': val('q41'),
+        'Style': getSel('style'),
+        'Exclamation marks': getSel('excl'),
+        'Reply length': getSel('length'),
+        'Never use': val('q45'),
+        'Always use': val('q46'),
+        'Proud example': val('q47'),
+        'Cringe example': val('q48'),
+        'Required info': val('q51'),
+        'Nice to know': val('q52'),
+        'Dream lead': val('q61'),
+        'Time-wasters': val('q62'),
+        'Notifications': getSel('notif'),
+        'Team members': val('q72'),
+        'Ignore numbers': val('q81'),
+        'Pricing response': val('q82'),
+        'Existing vs new': val('q83'),
+        'Spam handling': val('q84'),
+        'Returning callers': val('q91'),
+        'Re-engage after': val('q92'),
+        'Next step': getSel('nextstep'),
+        'Next step other': val('q101b'),
+        'Response time': val('q102'),
+        'Hard rules': val('q111'),
+        'Compliance language': val('q112'),
+        'Anything else': val('q121')
+      })
     });
-    const data=await res.json();
-    if(res.ok&&data.success){
+    const data = await res.json();
+    if (res.ok && data.success) {
       showSuccess(businessName);
     } else {
       throw new Error('Form failed');
