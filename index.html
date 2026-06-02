@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Client Onboarding — Bury Digital</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230B1C10'/><text x='50%25' y='52%25' font-family='system-ui,sans-serif' font-size='13' font-weight='900' fill='%2300C882' text-anchor='middle' dominant-baseline='central' letter-spacing='-0.5'>bd</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#ECEAE1;--cream-dark:#E2DFD5;--cream-darker:#D8D4C8;--white:#F8F6EF;--green:#0B1C10;--green-mid:#1E3828;--green-light:#2E5040;--muted:#5C7A69;--muted-light:#8BA899;--teal:#00C882;--teal-dark:#009E68;--teal-pale:rgba(0,200,130,.1);--teal-border:rgba(0,200,130,.25);}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--green);font-family:'Manrope',sans-serif;font-size:15px;line-height:1.65;min-height:100vh;}
+#progress{position:fixed;top:0;left:0;height:2px;background:var(--teal);width:0%;z-index:100;transition:width .08s;box-shadow:0 0 8px rgba(0,200,130,.4);}
+nav{position:sticky;top:0;z-index:50;background:rgba(236,234,225,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--cream-darker);padding:0 40px;height:60px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{flex-shrink:0;display:block;}
+.logo-text{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--green);letter-spacing:-.01em;}
+.nav-right{font-size:13px;color:var(--muted);}
+.nav-right a{color:var(--teal-dark);font-weight:600;text-decoration:none;}
+@media(max-width:520px){nav{padding:0 20px;}}
+.page{max-width:740px;margin:0 auto;padding:0 32px 100px;}
+@media(max-width:520px){.page{padding:0 20px 80px;}}
+header{padding:72px 0 56px;text-align:center;}
+.badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);border:1px solid var(--cream-darker);background:var(--white);padding:7px 16px;border-radius:100px;margin-bottom:28px;font-weight:500;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 3px rgba(0,200,130,.2);flex-shrink:0;}
+.page-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(36px,6vw,56px);letter-spacing:-.03em;line-height:1.05;color:var(--green);margin-bottom:16px;}
+.page-title em{font-style:normal;color:var(--teal);}
+.page-sub{font-size:17px;color:var(--muted);margin-bottom:28px;line-height:1.65;max-width:480px;margin-left:auto;margin-right:auto;}
+.page-pill{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);border:1px solid var(--cream-darker);padding:8px 18px;border-radius:100px;background:var(--white);}
+.page-pill::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--teal);}
+.intro{background:var(--white);border:1px solid var(--cream-darker);border-left:3px solid var(--teal);border-radius:12px;padding:22px 26px;margin-bottom:40px;font-size:14px;color:var(--muted);line-height:1.75;}
+.intro strong{color:var(--green);font-weight:600;}
+.section{background:var(--white);border:1px solid var(--cream-darker);border-radius:14px;padding:36px;margin-bottom:20px;box-shadow:0 2px 12px rgba(11,28,16,.05);}
+.sec-header{margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--cream-dark);}
+.sec-num{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.2em;color:var(--teal-dark);text-transform:uppercase;display:block;margin-bottom:5px;}
+.sec-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--green);letter-spacing:-.01em;}
+.q{margin-bottom:28px;}
+.q:last-child{margin-bottom:0;}
+.q-label{display:block;font-size:13px;font-weight:700;color:var(--green);margin-bottom:5px;letter-spacing:.01em;}
+.q-label .req{color:var(--teal-dark);margin-left:2px;}
+.q-hint{display:block;font-size:12px;color:var(--muted-light);margin-bottom:9px;line-height:1.5;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:520px){.two-col{grid-template-columns:1fr;}}
+input[type=text],input[type=email],input[type=tel],textarea{width:100%;background:var(--cream);border:1.5px solid var(--cream-darker);border-radius:8px;padding:12px 14px;color:var(--green);font-family:'Manrope',sans-serif;font-size:14px;outline:none;transition:border-color .15s,box-shadow .15s;-webkit-appearance:none;appearance:none;}
+input:focus,textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-pale);background:var(--white);}
+input::placeholder,textarea::placeholder{color:var(--muted-light);}
+textarea{resize:vertical;min-height:90px;line-height:1.65;}
+textarea.tall{min-height:130px;}
+.days{display:flex;flex-wrap:wrap;gap:8px;}
+.day{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--cream-darker);border-radius:10px;cursor:pointer;font-size:11px;font-weight:700;color:var(--muted);background:var(--cream);transition:all .15s;user-select:none;font-family:'Syne',sans-serif;letter-spacing:.04em;text-transform:uppercase;}
+.day:hover{border-color:var(--teal);color:var(--green);}
+.day.on{border-color:var(--teal);background:var(--teal-pale);color:var(--teal-dark);font-weight:800;}
+.opts{display:flex;flex-wrap:wrap;gap:8px;}
+.opts.col{flex-direction:column;}
+.opt{padding:10px 16px;border:1.5px solid var(--cream-darker);border-radius:8px;cursor:pointer;font-size:13px;color:var(--muted);background:var(--cream);transition:all .15s;user-select:none;font-family:'Manrope',sans-serif;font-weight:500;line-height:1.4;}
+.opt:hover{border-color:var(--teal);color:var(--green);}
+.opt.on{border-color:var(--teal);background:var(--teal-pale);color:var(--green);font-weight:600;}
+.opt-key{font-weight:700;color:var(--teal-dark);margin-right:5px;}
+.submit-wrap{margin-top:48px;text-align:center;}
+.submit-note{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7;}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:var(--green);font-family:'Syne',sans-serif;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:16px 44px;border-radius:12px;border:none;cursor:pointer;transition:all .15s;box-shadow:0 4px 20px rgba(0,200,130,.3);}
+.btn-primary:hover:not(:disabled){background:#00DFA0;transform:translateY(-1px);box-shadow:0 8px 28px rgba(0,200,130,.35);}
+.btn-primary:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+.spinner{width:15px;height:15px;border:2px solid rgba(11,28,16,.2);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.success-wrap{padding:80px 32px;text-align:center;}
+.success-icon{width:72px;height:72px;border-radius:50%;background:var(--teal-pale);border:2px solid var(--teal-border);display:flex;align-items:center;justify-content:center;margin:0 auto 28px;font-size:28px;color:var(--teal-dark);}
+.success-title{font-family:'Syne',sans-serif;font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-.025em;color:var(--green);margin-bottom:12px;}
+.success-sub{font-size:16px;color:var(--muted);line-height:1.7;max-width:400px;margin:0 auto 32px;}
+.success-detail{font-size:13px;color:var(--muted-light);}
+.error-msg{background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:16px 20px;font-size:13px;color:#991B1B;margin-top:16px;line-height:1.6;}
+footer{max-width:740px;margin:0 auto;padding:0 32px 60px;}
+.footer-inner{border-top:1px solid var(--cream-darker);padding-top:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.footer-text{font-size:12px;color:var(--muted-light);line-height:2;}
+.footer-text a{color:var(--muted-light);text-decoration:none;}
+.footer-text a:hover{color:var(--muted);}
+.sep{margin:0 6px;opacity:.4;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--cream-darker);border-radius:4px;}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav>
+  <a href="https://burydigitalai.com" class="nav-logo">
+    <svg class="logo-mark" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="7" fill="#0B1C10"/><text x="50%" y="52%" font-family="system-ui,sans-serif" font-size="13" font-weight="900" fill="#00C882" text-anchor="middle" dominant-baseline="central" letter-spacing="-0.5">bd</text></svg>
+    <span class="logo-text">bury digital</span>
+  </a>
+  <div class="nav-right">Questions? <a href="mailto:oscar@bury-digital.com">oscar@bury-digital.com</a></div>
+</nav>
+
+<div class="page" id="page-content">
+
+<header>
+  <div class="badge"><span class="badge-dot"></span>New client onboarding</div>
+  <h1 class="page-title">Let's build your<br><em>AI bot.</em></h1>
+  <p class="page-sub">Fill this out before your onboarding call. The more detail here, the closer your AI sounds like you from day one.</p>
+  <div class="page-pill">~20 minutes &nbsp;·&nbsp; Gaps covered on the call &nbsp;·&nbsp; No tech needed</div>
+</header>
+
+<div class="intro">
+  <strong>Take your time with Sections 4 and 5.</strong> Those two shape 80% of the conversation quality — the voice, the tone, what the bot asks and how it asks it. Everything else is straightforward. Skip anything you're unsure about and we'll sort it on the call.
+</div>
+
+<form id="form" onsubmit="handleSubmit(event)">
+
+  <div class="section">
+    <div class="sec-header"><span class="sec-num">Section 01</span><span class="sec-title">Business Basics</span></div>
+    <div class="two-col">
+      <div class="q"><label class="q-label" for="q11">Business name <span class="req">*</span></label><span class="q-hint">What the AI uses in replies</span><input type="text" id="q11" name="Business name" placeholder="e.g. Mitchell's Plumbing"></div>
+      <div class="q"><label class="q-label" for="q13">Your name <span class="req">*</span></label><span class="q-hint">The human leads route to</span><input type="text" id="q13" name="Your name" placeholder="e.g. Dave Mitchell"></div>
+    </div>
+    <div class="two-col">
+      <div class="q"><label class="q-label" for="q12">Main business phone <span class="req">*</span></label><span class="q-hint">The number being forwarded</span><input type="tel" id="q12" name="Phone" placeholder="e.g. 0412 345 678"></div>
+      <div class="q"><label class="q-label" for="q14">Your email</label><span class="q-hint">Included in the AI's sign-off to callers</span><input type="email" id="q14" name="Email" placeholder="e.g. dave@mitchellsplumbing.com.au"></div>
+    </div>
+    <div class="two-col">
+      <div class="q"><label class="q-label" for="q15">Industry or trade <span class="req">*</span></label><span class="q-hint">e.g. plumber, real estate agent, family lawyer</span><input type="text" id="q15" name="Industry" placeholder="e.g. Plumber"></div>
+      <div class="q"><label class="q-label" for="q16">Service area</label><span class="q-hint">Suburbs / city / state / Australia-wide</span><input type="text" id="q16" name="Service area" placeholder="e.g. Melbourne metro"></div>
+    </div>
+    <div class="q"><label class="q-label" for="q17">SIM provider</label><span class="q-hint">Affects how we configure your call forwarding — Telstra, Optus, Vodafone, Boost, etc.</span><input type="text" id="q17" name="SIM provider" placeholder="e.g. Telstra"></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-header"><span class="sec-num">Section 02</span><span class="sec-title">Hours</span></div>
+    <div class="q">
+      <label class="q-label">Days you operate</label>
+      <div class="days" id="days">
+        <div class="day" data-d="Mon">Mon</div><div class="day" data-d="Tue">Tue</div><div class="day" data-d="Wed">Wed</div><div class="day" data-d="Thu">Thu</div><div class="day" data-d="Fri">Fri</div><div class="day" data-d="Sat">Sat</div><div class="day" data-d="Sun">Sun</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="q"><label class="q-label" for="q22a">Start time</label><input type="text" id="q22a" name="Start time" placeholder="e.g. 7:00 AM"></div>
+      <div class="q"><label class="q-label" for="q22b">End time</label><input type="text" id="q22b" name="End time" placeholder="e.g. 6:00 PM"></div>
+    </div>
+    <div class="q"><label class="q-label" for="q23">Timezone</label><input type="text" id="q23" name="Timezone" placeholder="e.g. AEST (Australia/Melbourne)"></div>
+    <div class="q">
+      <label class="q-label">After-hours behaviour</label>
+      <div class="opts" id="g-afterhours">
+        <div class="opt" data-g="afterhours" data-v="Same as in-hours — AI engages normally"><span class="opt-key">A</span>Same as in-hours, AI engages normally</div>
+        <div class="opt" data-g="afterhours" data-v="Different message (see below)"><span class="opt-key">B</span>Different message (paste below)</div>
+        <div class="opt" data-g="afterhours" data-v="Name and number only — don't qualify"><span class="opt-key">C</span>Name and number only — don't qualify</div>
+        <div class="opt" data-g="afterhours" data-v="Static reply only, no engagement"><span class="opt-key">D</span>Static reply only, no engagement</div>
+      </div>
+    </div>
+    <div class="q"><label class="q-label" for="q24">After-hours message <span style="color:var(--muted-light);font-weight:400">(if B)</span></label><textarea id="q24" name="After-hours message" placeholder="Paste your custom after-hours reply here..."></textarea></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-header"><span class="sec-num">Section 03</span><span class="sec-title">Services</span></div>
+    <div class="q"><label class="q-label" for="q31">Everything you offer <span class="req">*</span></label><span class="q-hint">Don't be brief — the AI uses this to know what's in scope. List every service or product.</span><textarea class="tall" id="q31" name="Services offered" placeholder="e.g. Hot water systems, blocked drains, gas fitting, bathroom renovations, emergency callouts..."></textarea></div>
+    <div class="q"><label class="q-label" for="q32">What you do NOT do</label><span class="q-hint">Stops the AI promising things you can't deliver</span><textarea id="q32" name="Does not do" placeholder="e.g. No commercial work, no roofing, no air conditioning..."></textarea></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-header"><span class="sec-num">Section 04</span><span class="sec-title">Voice and Tone</span></div>
+    <div class="q"><label class="q-label" for="q41">Opening line <span class="req">*</span></label><span class="q-hint">The first SMS the AI sends after a missed call. Write it verbatim.</span><textarea id="q41" name="Opening line" placeholder="e.g. Hi, it's Dave from Mitchell's Plumbing — sorry I missed your call. What can I help you with?"></textarea></div>
+    <div class="q">
+      <label class="q-label">Style <span class="req">*</span></label>
+      <div class="opts" id="g-style">
+        <div class="opt" data-g="style" data-v="Direct — short, professional, no filler"><span class="opt-key">A</span>Direct — short, professional, no filler</div>
+        <div class="opt" data-g="style" data-v="Consultative — professional but warmer"><span class="opt-key">B</span>Consultative — professional but warmer</div>
+        <div class="opt" data-g="style" data-v="Friendly — conversational, casual okay"><span class="opt-key">C</span>Friendly — conversational, casual okay</div>
+        <div class="opt" data-g="style" data-v="Formal — polite, traditional business voice"><span class="opt-key">D</span>Formal — polite, traditional business voice</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="q">
+        <label class="q-label">Exclamation marks</label>
+        <div class="opts" id="g-excl">
+          <div class="opt" data-g="excl" data-v="Never">Never</div>
+          <div class="opt" data-g="excl" data-v="Sparingly">Sparingly</div>
+          <div class="opt" data-g="excl" data-v="Where natural">Where natural</div>
+        </div>
+      </div>
+      <div class="q">
+        <label class="q-label">Reply length</label>
+        <div class="opts col" id="g-length">
+          <div class="opt" data-g="length" data-v="Under 15 words">Under 15 words</div>
+          <div class="opt" data-g="length" data-v="15–30 words">15–30 words</div>
+          <div class="opt" data-g="length" data-v="30–60 words">30–60 words</div>
+          <div class="opt" data-g="length" data-v="Full paragraphs okay">Full paragraphs okay</div>
+        </div>
+      </div>
+    </div>
+    <div class="q"><label class="q-label" for="q45">Words the AI must NEVER use</label><span class="q-hint">Common bans: "absolutely", "happy to help", "no worries", "delighted". Add your own.</span><textarea id="q45" name="Never use" placeholder="e.g. 'no worries', 'absolutely', 'fantastic'..."></textarea></div>
+    <div class="q"><label class="q-label" for="q46">Words it must ALWAYS use</label><span class="q-hint">Catchphrases, sign-offs, company terms. Leave blank if none.</span><textarea id="q46" name="Always use" placeholder="e.g. Always sign off with 'Cheers, Dave'..."></textarea></div>
+    <div class="q"><label class="q-label" for="q47">A reply you'd be PROUD to send</label><span class="q-hint">A hypothetical is fine — skip if nothing comes to mind, we'll do it on the call</span><textarea id="q47" name="Proud example" placeholder="Paste or write an example that gets the tone exactly right..."></textarea></div>
+    <div class="q"><label class="q-label" for="q48">A reply that would make you CRINGE</label><span class="q-hint">Skip if unsure — we'll cover it on the call</span><textarea id="q48" name="Cringe example" placeholder="Paste or describe an example that's completely off-brand..."></textarea></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-header"><span class="sec-num">Section 05</span><span class="sec-title">What to Ask Callers</span></div>
+    <div class="q"><label class="q-label" for="q51">What do you need to know before you can quote, book, or call back? <span class="req">*</span></label><span class="q-hint">List everything — name, job type, location, urgency, budget. This builds your qualification flow.</span><textarea class="tall" id="q51" name="Required info from callers" placeholder="e.g.&#10;1. First name&#10;2. Type of job&#10;3. Suburb&#10;4. Urgency — emergency or can wait&#10;5. Rental or owner-occupier"></textarea></div>
+    <div class="q"><label class="q-label" for="q52">What's nice to know but you'd never push for?</label><textarea id="q52" name="Nice to know" placeholder="e.g. Budget range — useful if they offer it, but don't ask twice"></textarea></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-header"><span class="sec-num">Section 06</span><span class="sec-title">Lead Priority</span></div>
+    <div class="q"><label class="q-label" for="q61">Describe your dream lead <span class="req">*</span></label><span class="q-hint">The enquiry that makes you drop everything</span><textarea id="q61" name="Dream lead" placeholder="e.g. Owner-occupier in [suburb], burst pipe, needs someone today, happy to pay emergency rates"></textarea></div>
+    <div class="q"><label class="q-label" for="q62">Describe the time-wasters</label><span class="q-hint">Enquiries that can wait or shouldn't get a callback at all</span><textarea id="q62" name="Time-wasters" placeholder="e.g. Renters asking about a dripping tap, people wanting quotes months away..."></textarea></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-header"><span class="sec-num">Section 07</span><span class="sec-title">Notifications</span></div>
+    <div class="q">
+      <label class="q-label">When should you be notified?</label>
+      <div class="opts col" id="g-notif">
+        <div class="opt" data-g="notif" data-v="Instant for every lead">Instant for every lead</div>
+        <div class="opt" data-g="notif" data-v="Instant for hot leads, end-of-day digest for the rest">Instant for hot leads, end-of-day digest for the rest</div>
+        <div class="opt" data-g="notif" data-v="End-of-day digest only">End-of-day digest only</div>
+      </div>
+    </div>
+    <div class="q"><label class="q-label" for="q72">Team members who also need notifications</label><span class="q-hint">Name + mobile for each person</span><textarea id="q72" name="Team notifications" placeholder="e.g. Sarah (office manager) — 0412 111 222"></textarea></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-header"><span class="sec-num">Section 08</span><span class="sec-title">Edge Cases</span></div>
+    <div class="q"><label class="q-label" for="q81">Numbers the AI must completely ignore</label><span class="q-hint">Your own mobile, colleagues, family. Also editable in your Client Hub settings.</span><textarea id="q81" name="Ignore these numbers" placeholder="e.g. 0412 345 678 (my personal mobile)"></textarea></div>
+    <div class="q"><label class="q-label" for="q82">Pricing enquiries — what can the AI say?</label><textarea id="q82" name="Pricing response" placeholder="e.g. 'Pricing depends on the job — I quote after a quick look. Happy to give you a ballpark on the call.'"></textarea></div>
+    <div class="q"><label class="q-label" for="q83">Existing customers vs new enquiries</label><span class="q-hint">Should the AI treat them differently? How?</span><textarea id="q83" name="Existing vs new callers" placeholder="e.g. Existing customers can skip qualification — just get a callback time"></textarea></div>
+    <div class="q"><label class="q-label" for="q84">Spam, abusive, or obvious time-wasters</label><span class="q-hint">What should the AI do?</span><textarea id="q84" name="Spam handling" placeholder="e.g. Politely wrap up, don't engage further, flag it for me"></textarea></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-header"><span class="sec-num">Section 09</span><span class="sec-title">Returning Callers</span></div>
+    <div class="q"><label class="q-label" for="q91">If someone who's already been in contact calls again, should the AI treat them differently?</label><textarea id="q91" name="Returning callers" placeholder="e.g. Acknowledge it's them, skip re-qualification, just check if it's a new job or a follow-up..."></textarea></div>
+    <div class="q"><label class="q-label" for="q92">How long before the AI treats a known caller as a fresh enquiry?</label><span class="q-hint">e.g. 24 hours, 1 week, always remember them</span><input type="text" id="q92" name="Re-engage window" placeholder="e.g. Always remember them unless it's been over 3 months"></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-header"><span class="sec-num">Section 10</span><span class="sec-title">Next Steps</span></div>
+    <div class="q">
+      <label class="q-label">After qualification, what's the typical next step?</label>
+      <div class="opts" id="g-nextstep">
+        <div class="opt" data-g="nextstep" data-v="I call them back"><span class="opt-key">A</span>I call them back</div>
+        <div class="opt" data-g="nextstep" data-v="I send a quote"><span class="opt-key">B</span>I send a quote</div>
+        <div class="opt" data-g="nextstep" data-v="I book a site visit"><span class="opt-key">C</span>I book a site visit</div>
+        <div class="opt" data-g="nextstep" data-v="Other"><span class="opt-key">D</span>Other</div>
+      </div>
+    </div>
+    <div class="q"><label class="q-label" for="q101b">If other, describe:</label><input type="text" id="q101b" name="Next step other" placeholder="e.g. They book via a Calendly link"></div>
+    <div class="q"><label class="q-label" for="q102">Response time to promise callers</label><span class="q-hint">What the AI commits to on your behalf</span><input type="text" id="q102" name="Response time promise" placeholder="e.g. I'll be back to you within 2 hours"></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-header"><span class="sec-num">Section 11</span><span class="sec-title">Hard Rules</span></div>
+    <div class="q"><label class="q-label" for="q111">Anything the AI must NEVER do, regardless of context</label><textarea id="q111" name="Hard rules" placeholder="e.g. Never confirm pricing, never make bookings without my approval, never discuss competitors..."></textarea></div>
+    <div class="q"><label class="q-label" for="q112">Compliance language required</label><span class="q-hint">Licence numbers, insurance, qualifications — paste exactly as you want it to appear</span><textarea id="q112" name="Compliance language" placeholder="e.g. Lic. No. 123456 · Fully insured · VBA registered Master Plumber"></textarea></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-header"><span class="sec-num">Section 12</span><span class="sec-title">Anything Else</span></div>
+    <div class="q"><label class="q-label" for="q121">Anything we should know about your business, your customers, or how you want the AI to feel</label><span class="q-hint">Write as much as you want</span><textarea class="tall" id="q121" name="Anything else" placeholder="e.g. Family business, 20 years going. Most work is referrals. Customers are older homeowners in the eastern suburbs. I want the bot to feel like a real tradesperson, not a call centre..."></textarea></div>
+  </div>
+
+  <div class="submit-wrap">
+    <p class="submit-note">Hit submit and your answers go straight to Oscar.<br>He'll have your bot configured before the call.</p>
+    <button type="submit" class="btn-primary" id="submit-btn">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2.5 7.5H12.5M12.5 7.5L8.5 3.5M12.5 7.5L8.5 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Submit Questionnaire
+    </button>
+    <div id="error-msg" class="error-msg" style="display:none;">Something went wrong sending your form. Please email your answers directly to <a href="mailto:oscar@bury-digital.com">oscar@bury-digital.com</a>.</div>
+  </div>
+
+</form>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="https://burydigitalai.com" class="nav-logo">
+      <svg class="logo-mark" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="7" fill="#0B1C10"/><text x="50%" y="52%" font-family="system-ui,sans-serif" font-size="13" font-weight="900" fill="#00C882" text-anchor="middle" dominant-baseline="central" letter-spacing="-0.5">bd</text></svg>
+      <span class="logo-text">bury digital</span>
+    </a>
+    <div class="footer-text">
+      ABN: [TO ADD]<span class="sep">·</span><a href="https://burydigitalai.com">burydigitalai.com</a><span class="sep">·</span><a href="mailto:oscar@bury-digital.com">oscar@bury-digital.com</a><br>
+      Melbourne, VIC, Australia<span class="sep">·</span>© 2026 Bury Digital
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement,st=d.scrollTop||document.body.scrollTop,sh=d.scrollHeight-d.clientHeight;document.getElementById('progress').style.width=(sh>0?st/sh*100:0)+'%';});
+document.querySelectorAll('.day').forEach(d=>{d.addEventListener('click',()=>d.classList.toggle('on'));});
+document.querySelectorAll('.opt').forEach(o=>{o.addEventListener('click',()=>{const g=o.dataset.g;document.querySelectorAll(`[data-g="${g}"]`).forEach(x=>x.classList.remove('on'));o.classList.add('on');});});
+function getDays(){return Array.from(document.querySelectorAll('.day.on')).map(d=>d.dataset.d).join(', ')||'Not specified';}
+function getSel(g){const el=document.querySelector(`[data-g="${g}"].on`);return el?el.dataset.v:'Not specified';}
+function val(id){return(document.getElementById(id)?.value?.trim())||'';}
+
+async function handleSubmit(e){
+  e.preventDefault();
+  const btn=document.getElementById('submit-btn');
+  const errEl=document.getElementById('error-msg');
+  errEl.style.display='none';
+  btn.disabled=true;
+  btn.innerHTML='<span class="spinner"></span>Sending...';
+
+  const businessName=val('q11')||'New Client';
+
+  const payload={
+    _subject: 'New Onboarding — '+businessName,
+    _captcha: 'false',
+    _template: 'table',
+    'Business name': val('q11'),
+    'Your name': val('q13'),
+    'Phone': val('q12'),
+    'Email': val('q14'),
+    'Industry': val('q15'),
+    'Service area': val('q16'),
+    'SIM provider': val('q17'),
+    'Days': getDays(),
+    'Start time': val('q22a'),
+    'End time': val('q22b'),
+    'Timezone': val('q23'),
+    'After hours': getSel('afterhours'),
+    'After hours message': val('q24'),
+    'Services offered': val('q31'),
+    'Does not do': val('q32'),
+    'Opening line': val('q41'),
+    'Style': getSel('style'),
+    'Exclamation marks': getSel('excl'),
+    'Reply length': getSel('length'),
+    'Never use': val('q45'),
+    'Always use': val('q46'),
+    'Proud example': val('q47'),
+    'Cringe example': val('q48'),
+    'Required info': val('q51'),
+    'Nice to know': val('q52'),
+    'Dream lead': val('q61'),
+    'Time-wasters': val('q62'),
+    'Notifications': getSel('notif'),
+    'Team members': val('q72'),
+    'Ignore numbers': val('q81'),
+    'Pricing response': val('q82'),
+    'Existing vs new': val('q83'),
+    'Spam handling': val('q84'),
+    'Returning callers': val('q91'),
+    'Re-engage after': val('q92'),
+    'Next step': getSel('nextstep'),
+    'Next step (other)': val('q101b'),
+    'Response time promise': val('q102'),
+    'Hard rules': val('q111'),
+    'Compliance language': val('q112'),
+    'Anything else': val('q121')
+  };
+
+  try{
+    const res=await fetch('https://formsubmit.co/ajax/oscar@bury-digital.com',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(payload)
+    });
+    const data=await res.json();
+    if(res.ok&&data.success){
+      showSuccess(businessName);
+    } else {
+      throw new Error('Form failed');
+    }
+  } catch(err){
+    btn.disabled=false;
+    btn.innerHTML='<svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2.5 7.5H12.5M12.5 7.5L8.5 3.5M12.5 7.5L8.5 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Submit Questionnaire';
+    errEl.style.display='block';
+  }
+}
+
+function showSuccess(name){
+  const page=document.getElementById('page-content');
+  page.innerHTML=`
+    <div class="success-wrap">
+      <div class="success-icon">✓</div>
+      <h2 class="success-title">You're all done${name&&name!=='New Client'?', '+name.split(' ')[0]:''}.</h2>
+      <p class="success-sub">Your answers are on their way to Oscar. He'll have your bot configured and ready to test before your call.</p>
+      <p class="success-detail">Questions in the meantime? <a href="mailto:oscar@bury-digital.com" style="color:var(--teal-dark);font-weight:600;text-decoration:none;">oscar@bury-digital.com</a></p>
+    </div>
+  `;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
