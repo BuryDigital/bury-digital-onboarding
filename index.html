@@ -33,6 +33,14 @@ header{padding:72px 0 56px;text-align:center;}
 .page-pill::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--teal);}
 .intro{background:var(--white);border:1px solid var(--cream-darker);border-left:3px solid var(--teal);border-radius:12px;padding:22px 26px;margin-bottom:40px;font-size:14px;color:var(--muted);line-height:1.75;}
 .intro strong{color:var(--green);font-weight:600;}
+.setup-toggle{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px;}
+@media(max-width:520px){.setup-toggle{grid-template-columns:1fr;}}
+.setup-btn{display:flex;flex-direction:column;gap:3px;text-align:left;padding:16px 20px;border:1.5px solid var(--cream-darker);border-radius:12px;background:var(--white);cursor:pointer;transition:all .15s;font-family:'Manrope',sans-serif;}
+.setup-btn:hover{border-color:var(--teal);}
+.setup-btn.on{border-color:var(--teal);background:var(--teal-pale);box-shadow:0 0 0 3px var(--teal-pale);}
+.setup-btn-t{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--green);}
+.setup-btn.on .setup-btn-t{color:var(--teal-dark);}
+.setup-btn-s{font-size:12px;color:var(--muted);}
 .section{background:var(--white);border:1px solid var(--cream-darker);border-radius:14px;padding:36px;margin-bottom:20px;box-shadow:0 2px 12px rgba(11,28,16,.05);}
 .sec-header{margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--cream-dark);}
 .sec-num{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.2em;color:var(--teal-dark);text-transform:uppercase;display:block;margin-bottom:5px;}
@@ -88,7 +96,7 @@ footer{max-width:740px;margin:0 auto;padding:0 32px 60px;}
 <div id="progress"></div>
 
 <nav>
-  <a href="https://burydigitalai.com" class="nav-logo">
+  <a href="https://bury-digital.com" class="nav-logo">
     <svg class="logo-mark" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="7" fill="#0B1C10"/><text x="50%" y="52%" font-family="system-ui,sans-serif" font-size="13" font-weight="900" fill="#00C882" text-anchor="middle" dominant-baseline="central" letter-spacing="-0.5">bd</text></svg>
     <span class="logo-text">bury digital</span>
   </a>
@@ -99,9 +107,9 @@ footer{max-width:740px;margin:0 auto;padding:0 32px 60px;}
 
 <header>
   <div class="badge"><span class="badge-dot"></span>New client onboarding</div>
-  <h1 class="page-title">Set up your<br><em>missed-call recovery</em></h1>
+  <h1 class="page-title">Set up your<br><em>playbook</em></h1>
   <p class="page-sub">Fill this out before your onboarding call. The more detail here, the closer your AI sounds like you from day one.</p>
-  <div class="page-pill">~20 minutes &nbsp;·&nbsp; Gaps covered on the call &nbsp;·&nbsp; No tech needed</div>
+  <div class="page-pill" id="time-pill">~7 minutes &nbsp;·&nbsp; Gaps covered on the call &nbsp;·&nbsp; No tech needed</div>
 </header>
 
 <div class="intro">
@@ -109,6 +117,18 @@ footer{max-width:740px;margin:0 auto;padding:0 32px 60px;}
 </div>
 
 <form id="form" onsubmit="handleSubmit(event)">
+
+  <input type="hidden" id="setup_type" name="setup_type" value="standard">
+  <div class="setup-toggle" role="group" aria-label="Choose your setup type">
+    <button type="button" class="setup-btn" data-tier="standard">
+      <span class="setup-btn-t">Standard setup</span>
+      <span class="setup-btn-s">~7 minutes · most businesses</span>
+    </button>
+    <button type="button" class="setup-btn" data-tier="tailored">
+      <span class="setup-btn-t">Tailored setup</span>
+      <span class="setup-btn-s">Regulated / complex industries</span>
+    </button>
+  </div>
 
   <div class="section">
     <div class="sec-header"><span class="sec-num">Section 01</span><span class="sec-title">Business Basics</span></div>
@@ -201,13 +221,20 @@ footer{max-width:740px;margin:0 auto;padding:0 32px 60px;}
     <div class="q"><label class="q-label" for="q52">What's nice to know but you'd never push for?</label><textarea id="q52" name="Nice to know" placeholder="e.g. Budget range — useful if they offer it, but don't ask twice"></textarea></div>
   </div>
 
-  <div class="section">
+  <!-- Standard-only host for the "ignore numbers" field. In Tailored mode this
+       section is hidden and the q81 field moves back into Section 08. -->
+  <div class="section" data-tier="standard-ignore">
+    <div class="sec-header"><span class="sec-num">Edge case</span><span class="sec-title">Numbers to Ignore</span></div>
+    <div id="standard-ignore-body"></div>
+  </div>
+
+  <div class="section" data-tier="tailored">
     <div class="sec-header"><span class="sec-num">Section 06</span><span class="sec-title">Lead Priority</span></div>
     <div class="q"><label class="q-label" for="q61">Describe your dream lead <span class="req">*</span></label><span class="q-hint">The enquiry that makes you drop everything</span><textarea id="q61" name="Dream lead" placeholder="e.g. Owner-occupier in [suburb], burst pipe, needs someone today, happy to pay emergency rates"></textarea></div>
     <div class="q"><label class="q-label" for="q62">Describe the time-wasters</label><span class="q-hint">Enquiries that can wait or shouldn't get a callback at all</span><textarea id="q62" name="Time-wasters" placeholder="e.g. Renters asking about a dripping tap, people wanting quotes months away..."></textarea></div>
   </div>
 
-  <div class="section">
+  <div class="section" data-tier="tailored">
     <div class="sec-header"><span class="sec-num">Section 07</span><span class="sec-title">Notifications</span></div>
     <div class="q">
       <label class="q-label">When should you be notified?</label>
@@ -220,7 +247,7 @@ footer{max-width:740px;margin:0 auto;padding:0 32px 60px;}
     <div class="q"><label class="q-label" for="q72">Team members who also need notifications</label><span class="q-hint">Name + mobile for each person</span><textarea id="q72" name="Team notifications" placeholder="e.g. Sarah (office manager) — 0412 111 222"></textarea></div>
   </div>
 
-  <div class="section">
+  <div class="section" data-tier="tailored" id="sec-08">
     <div class="sec-header"><span class="sec-num">Section 08</span><span class="sec-title">Edge Cases</span></div>
     <div class="q"><label class="q-label" for="q81">Numbers the AI must completely ignore</label><span class="q-hint">Your own mobile, colleagues, family. Also editable in your Client Hub settings.</span><textarea id="q81" name="Ignore these numbers" placeholder="e.g. 0412 345 678 (my personal mobile)"></textarea></div>
     <div class="q"><label class="q-label" for="q82">Pricing enquiries — what can the AI say?</label><textarea id="q82" name="Pricing response" placeholder="e.g. 'Pricing depends on the job — I quote after a quick look. Happy to give you a ballpark on the call.'"></textarea></div>
@@ -228,13 +255,13 @@ footer{max-width:740px;margin:0 auto;padding:0 32px 60px;}
     <div class="q"><label class="q-label" for="q84">Spam, abusive, or obvious time-wasters</label><span class="q-hint">What should the AI do?</span><textarea id="q84" name="Spam handling" placeholder="e.g. Politely wrap up, don't engage further, flag it for me"></textarea></div>
   </div>
 
-  <div class="section">
+  <div class="section" data-tier="tailored">
     <div class="sec-header"><span class="sec-num">Section 09</span><span class="sec-title">Returning Callers</span></div>
     <div class="q"><label class="q-label" for="q91">If someone who's already been in contact calls again, should the AI treat them differently?</label><textarea id="q91" name="Returning callers" placeholder="e.g. Acknowledge it's them, skip re-qualification, just check if it's a new job or a follow-up..."></textarea></div>
     <div class="q"><label class="q-label" for="q92">How long before the AI treats a known caller as a fresh enquiry?</label><span class="q-hint">e.g. 24 hours, 1 week, always remember them</span><input type="text" id="q92" name="Re-engage window" placeholder="e.g. Always remember them unless it's been over 3 months"></div>
   </div>
 
-  <div class="section">
+  <div class="section" data-tier="tailored">
     <div class="sec-header"><span class="sec-num">Section 10</span><span class="sec-title">Next Steps</span></div>
     <div class="q">
       <label class="q-label">After qualification, what's the typical next step?</label>
@@ -249,7 +276,7 @@ footer{max-width:740px;margin:0 auto;padding:0 32px 60px;}
     <div class="q"><label class="q-label" for="q102">Response time to promise callers</label><span class="q-hint">What the AI commits to on your behalf</span><input type="text" id="q102" name="Response time promise" placeholder="e.g. I'll be back to you within 2 hours"></div>
   </div>
 
-  <div class="section">
+  <div class="section" data-tier="tailored">
     <div class="sec-header"><span class="sec-num">Section 11</span><span class="sec-title">Hard Rules</span></div>
     <div class="q"><label class="q-label" for="q111">Anything the AI must NEVER do, regardless of context</label><textarea id="q111" name="Hard rules" placeholder="e.g. Never confirm pricing, never make bookings without my approval, never discuss competitors..."></textarea></div>
     <div class="q"><label class="q-label" for="q112">Compliance language required</label><span class="q-hint">Licence numbers, insurance, qualifications — paste exactly as you want it to appear</span><textarea id="q112" name="Compliance language" placeholder="e.g. Lic. No. 123456 · Fully insured · VBA registered Master Plumber"></textarea></div>
@@ -274,7 +301,7 @@ footer{max-width:740px;margin:0 auto;padding:0 32px 60px;}
 
 <footer>
   <div class="footer-inner">
-    <a href="https://burydigitalai.com" class="nav-logo">
+    <a href="https://bury-digital.com" class="nav-logo">
       <svg class="logo-mark" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="7" fill="#0B1C10"/><text x="50%" y="52%" font-family="system-ui,sans-serif" font-size="13" font-weight="900" fill="#00C882" text-anchor="middle" dominant-baseline="central" letter-spacing="-0.5">bd</text></svg>
       <span class="logo-text">bury digital</span>
     </a>
@@ -290,8 +317,39 @@ window.addEventListener('scroll',()=>{const d=document.documentElement,st=d.scro
 document.querySelectorAll('.day').forEach(d=>{d.addEventListener('click',()=>d.classList.toggle('on'));});
 document.querySelectorAll('.opt').forEach(o=>{o.addEventListener('click',()=>{const g=o.dataset.g;document.querySelectorAll(`[data-g="${g}"]`).forEach(x=>x.classList.remove('on'));o.classList.add('on');});});
 function getDays(){return Array.from(document.querySelectorAll('.day.on')).map(d=>d.dataset.d).join(', ')||'Not specified';}
-function getSel(g){const el=document.querySelector(`[data-g="${g}"].on`);return el?el.dataset.v:'Not specified';}
-function val(id){return(document.getElementById(id)?.value?.trim())||'';}
+// A selection only counts if it's visible (its section isn't hidden by the
+// setup-type toggle). offsetParent is null for display:none elements.
+function getSel(g){const el=document.querySelector(`[data-g="${g}"].on`);return(el&&el.offsetParent!==null)?el.dataset.v:'Not specified';}
+// Disabled inputs (in hidden sections) report empty so they're pruned from the payload.
+function val(id){const el=document.getElementById(id);return(el&&!el.disabled?el.value?.trim():'')||'';}
+
+// ── Setup-type toggle: Standard (flat $297) vs Tailored (regulated/complex) ──
+function applyTier(tier){
+  document.getElementById('setup_type').value=tier;
+  // The "ignore numbers" field is shared: it lives in Section 08 for Tailored,
+  // but is surfaced on its own for Standard. Move the single node so there's
+  // never a duplicate id/field name.
+  const ignoreQ=document.getElementById('q81').closest('.q');
+  if(tier==='standard'){
+    document.getElementById('standard-ignore-body').appendChild(ignoreQ);
+  }else{
+    const s08=document.getElementById('sec-08');
+    s08.insertBefore(ignoreQ, s08.querySelector('.sec-header').nextSibling);
+  }
+  // Show the right sections; disable inputs in hidden ones so they submit nothing.
+  // Scope to .section so the toggle buttons (also data-tier) aren't affected.
+  document.querySelectorAll('.section[data-tier]').forEach(sec=>{
+    const t=sec.dataset.tier;
+    const show = t==='standard-ignore' ? tier==='standard' : tier==='tailored';
+    sec.style.display = show ? '' : 'none';
+    sec.querySelectorAll('input,textarea').forEach(el=>{ el.disabled=!show; });
+  });
+  document.querySelectorAll('.setup-btn').forEach(b=>b.classList.toggle('on', b.dataset.tier===tier));
+  const pill=document.getElementById('time-pill');
+  if(pill) pill.innerHTML=(tier==='standard'?'~7 minutes':'~20 minutes')+' &nbsp;·&nbsp; Gaps covered on the call &nbsp;·&nbsp; No tech needed';
+}
+document.querySelectorAll('.setup-btn').forEach(b=>b.addEventListener('click',()=>applyTier(b.dataset.tier)));
+applyTier('standard');
 
 async function handleSubmit(e){
   e.preventDefault();
@@ -303,10 +361,9 @@ async function handleSubmit(e){
 
   const businessName=val('q11')||'New Client';
 
-  const payload={
-    _subject: 'New Onboarding — '+businessName,
-    _captcha: 'false',
-    _template: 'table',
+  // Collect every answer, then drop blanks — including whole sections hidden by
+  // the setup-type toggle, whose inputs are disabled (so val() returns '').
+  const fields={
     'Business name': val('q11'),
     'Your name': val('q13'),
     'Phone': val('q12'),
@@ -343,12 +400,14 @@ async function handleSubmit(e){
     'Returning callers': val('q91'),
     'Re-engage after': val('q92'),
     'Next step': getSel('nextstep'),
-    'Next step (other)': val('q101b'),
-    'Response time promise': val('q102'),
+    'Next step other': val('q101b'),
+    'Response time': val('q102'),
     'Hard rules': val('q111'),
     'Compliance language': val('q112'),
     'Anything else': val('q121')
   };
+  Object.keys(fields).forEach(k=>{ if(fields[k]===''||fields[k]==='Not specified') delete fields[k]; });
+  fields.setup_type=document.getElementById('setup_type').value;
 
   try{
     const res = await fetch('https://api.web3forms.com/submit', {
@@ -359,47 +418,7 @@ async function handleSubmit(e){
         subject: 'New Onboarding — ' + businessName,
         from_name: businessName,
         botcheck: '',
-        'Business name': val('q11'),
-        'Your name': val('q13'),
-        'Phone': val('q12'),
-        'Email': val('q14'),
-        'Industry': val('q15'),
-        'Service area': val('q16'),
-        'SIM provider': val('q17'),
-        'Days': getDays(),
-        'Start time': val('q22a'),
-        'End time': val('q22b'),
-        'Timezone': val('q23'),
-        'After hours': getSel('afterhours'),
-        'After hours message': val('q24'),
-        'Services offered': val('q31'),
-        'Does not do': val('q32'),
-        'Opening line': val('q41'),
-        'Style': getSel('style'),
-        'Exclamation marks': getSel('excl'),
-        'Reply length': getSel('length'),
-        'Never use': val('q45'),
-        'Always use': val('q46'),
-        'Proud example': val('q47'),
-        'Cringe example': val('q48'),
-        'Required info': val('q51'),
-        'Nice to know': val('q52'),
-        'Dream lead': val('q61'),
-        'Time-wasters': val('q62'),
-        'Notifications': getSel('notif'),
-        'Team members': val('q72'),
-        'Ignore numbers': val('q81'),
-        'Pricing response': val('q82'),
-        'Existing vs new': val('q83'),
-        'Spam handling': val('q84'),
-        'Returning callers': val('q91'),
-        'Re-engage after': val('q92'),
-        'Next step': getSel('nextstep'),
-        'Next step other': val('q101b'),
-        'Response time': val('q102'),
-        'Hard rules': val('q111'),
-        'Compliance language': val('q112'),
-        'Anything else': val('q121')
+        ...fields
       })
     });
     const data = await res.json();
