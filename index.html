@@ -121,13 +121,18 @@ footer{max-width:740px;margin:0 auto;padding:0 32px 60px;}
   <input type="hidden" id="setup_type" name="setup_type" value="standard">
   <div class="setup-toggle" role="group" aria-label="Choose your setup type">
     <button type="button" class="setup-btn" data-tier="standard">
-      <span class="setup-btn-t">Standard setup</span>
-      <span class="setup-btn-s">~7 minutes · most businesses</span>
+      <span class="setup-btn-t">Standard</span>
+      <span class="setup-btn-s">Trades &amp; straightforward businesses</span>
     </button>
-    <button type="button" class="setup-btn" data-tier="tailored">
-      <span class="setup-btn-t">Tailored setup</span>
-      <span class="setup-btn-s">Regulated / complex industries</span>
+    <button type="button" class="setup-btn" data-tier="intake">
+      <span class="setup-btn-t">Intake</span>
+      <span class="setup-btn-s">Law, conveyancing, broking &amp; advice</span>
     </button>
+  </div>
+
+  <div class="intro" id="intake-callout" style="display:none;border-left-color:var(--teal);">
+    <strong>Intake tier — your setup is built in a session with Oscar, not from this form alone.</strong><br>
+    Fill in everything you can below. Anything you're unsure about gets covered on the call. Most sessions run 45–60 minutes, and your configuration is built around your specific practice — matter types, compliance language, and how you want enquiries handled.
   </div>
 
   <div class="section">
@@ -221,20 +226,20 @@ footer{max-width:740px;margin:0 auto;padding:0 32px 60px;}
     <div class="q"><label class="q-label" for="q52">What's nice to know but you'd never push for?</label><textarea id="q52" name="Nice to know" placeholder="e.g. Budget range — useful if they offer it, but don't ask twice"></textarea></div>
   </div>
 
-  <!-- Standard-only host for the "ignore numbers" field. In Tailored mode this
+  <!-- Standard-only host for the "ignore numbers" field. In Intake mode this
        section is hidden and the q81 field moves back into Section 08. -->
   <div class="section" data-tier="standard-ignore">
     <div class="sec-header"><span class="sec-num">Edge case</span><span class="sec-title">Numbers to Ignore</span></div>
     <div id="standard-ignore-body"></div>
   </div>
 
-  <div class="section" data-tier="tailored">
+  <div class="section" data-tier="intake">
     <div class="sec-header"><span class="sec-num">Section 06</span><span class="sec-title">Lead Priority</span></div>
     <div class="q"><label class="q-label" for="q61">Describe your dream lead <span class="req">*</span></label><span class="q-hint">The enquiry that makes you drop everything</span><textarea id="q61" name="Dream lead" placeholder="e.g. Owner-occupier in [suburb], burst pipe, needs someone today, happy to pay emergency rates"></textarea></div>
     <div class="q"><label class="q-label" for="q62">Describe the time-wasters</label><span class="q-hint">Enquiries that can wait or shouldn't get a callback at all</span><textarea id="q62" name="Time-wasters" placeholder="e.g. Renters asking about a dripping tap, people wanting quotes months away..."></textarea></div>
   </div>
 
-  <div class="section" data-tier="tailored">
+  <div class="section" data-tier="intake">
     <div class="sec-header"><span class="sec-num">Section 07</span><span class="sec-title">Notifications</span></div>
     <div class="q">
       <label class="q-label">When should you be notified?</label>
@@ -247,7 +252,7 @@ footer{max-width:740px;margin:0 auto;padding:0 32px 60px;}
     <div class="q"><label class="q-label" for="q72">Team members who also need notifications</label><span class="q-hint">Name + mobile for each person</span><textarea id="q72" name="Team notifications" placeholder="e.g. Sarah (office manager) — 0412 111 222"></textarea></div>
   </div>
 
-  <div class="section" data-tier="tailored" id="sec-08">
+  <div class="section" data-tier="intake" id="sec-08">
     <div class="sec-header"><span class="sec-num">Section 08</span><span class="sec-title">Edge Cases</span></div>
     <div class="q"><label class="q-label" for="q81">Numbers the AI must completely ignore</label><span class="q-hint">Your own mobile, colleagues, family. Also editable in your Client Hub settings.</span><textarea id="q81" name="Ignore these numbers" placeholder="e.g. 0412 345 678 (my personal mobile)"></textarea></div>
     <div class="q"><label class="q-label" for="q82">Pricing enquiries — what can the AI say?</label><textarea id="q82" name="Pricing response" placeholder="e.g. 'Pricing depends on the job — I quote after a quick look. Happy to give you a ballpark on the call.'"></textarea></div>
@@ -255,13 +260,13 @@ footer{max-width:740px;margin:0 auto;padding:0 32px 60px;}
     <div class="q"><label class="q-label" for="q84">Spam, abusive, or obvious time-wasters</label><span class="q-hint">What should the AI do?</span><textarea id="q84" name="Spam handling" placeholder="e.g. Politely wrap up, don't engage further, flag it for me"></textarea></div>
   </div>
 
-  <div class="section" data-tier="tailored">
+  <div class="section" data-tier="intake">
     <div class="sec-header"><span class="sec-num">Section 09</span><span class="sec-title">Returning Callers</span></div>
     <div class="q"><label class="q-label" for="q91">If someone who's already been in contact calls again, should the AI treat them differently?</label><textarea id="q91" name="Returning callers" placeholder="e.g. Acknowledge it's them, skip re-qualification, just check if it's a new job or a follow-up..."></textarea></div>
     <div class="q"><label class="q-label" for="q92">How long before the AI treats a known caller as a fresh enquiry?</label><span class="q-hint">e.g. 24 hours, 1 week, always remember them</span><input type="text" id="q92" name="Re-engage window" placeholder="e.g. Always remember them unless it's been over 3 months"></div>
   </div>
 
-  <div class="section" data-tier="tailored">
+  <div class="section" data-tier="intake">
     <div class="sec-header"><span class="sec-num">Section 10</span><span class="sec-title">Next Steps</span></div>
     <div class="q">
       <label class="q-label">After qualification, what's the typical next step?</label>
@@ -276,7 +281,7 @@ footer{max-width:740px;margin:0 auto;padding:0 32px 60px;}
     <div class="q"><label class="q-label" for="q102">Response time to promise callers</label><span class="q-hint">What the AI commits to on your behalf</span><input type="text" id="q102" name="Response time promise" placeholder="e.g. I'll be back to you within 2 hours"></div>
   </div>
 
-  <div class="section" data-tier="tailored">
+  <div class="section" data-tier="intake">
     <div class="sec-header"><span class="sec-num">Section 11</span><span class="sec-title">Hard Rules</span></div>
     <div class="q"><label class="q-label" for="q111">Anything the AI must NEVER do, regardless of context</label><textarea id="q111" name="Hard rules" placeholder="e.g. Never confirm pricing, never make bookings without my approval, never discuss competitors..."></textarea></div>
     <div class="q"><label class="q-label" for="q112">Compliance language required</label><span class="q-hint">Licence numbers, insurance, qualifications — paste exactly as you want it to appear</span><textarea id="q112" name="Compliance language" placeholder="e.g. Lic. No. 123456 · Fully insured · VBA registered Master Plumber"></textarea></div>
@@ -288,7 +293,7 @@ footer{max-width:740px;margin:0 auto;padding:0 32px 60px;}
   </div>
 
   <div class="submit-wrap">
-    <p class="submit-note">Hit submit and your answers go straight to Oscar.<br>He'll have your bot configured before the call.</p>
+    <p class="submit-note" id="submit-note">Hit submit and your answers go straight to Oscar.<br>He'll have your bot configured before the call.</p>
     <button type="submit" class="btn-primary" id="submit-btn">
       <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2.5 7.5H12.5M12.5 7.5L8.5 3.5M12.5 7.5L8.5 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Submit Questionnaire
@@ -323,10 +328,10 @@ function getSel(g){const el=document.querySelector(`[data-g="${g}"].on`);return(
 // Disabled inputs (in hidden sections) report empty so they're pruned from the payload.
 function val(id){const el=document.getElementById(id);return(el&&!el.disabled?el.value?.trim():'')||'';}
 
-// ── Setup-type toggle: Standard (flat $297) vs Tailored (regulated/complex) ──
+// ── Setup-type toggle: Standard (flat $297) vs Intake (regulated/professional) ──
 function applyTier(tier){
   document.getElementById('setup_type').value=tier;
-  // The "ignore numbers" field is shared: it lives in Section 08 for Tailored,
+  // The "ignore numbers" field is shared: it lives in Section 08 for Intake,
   // but is surfaced on its own for Standard. Move the single node so there's
   // never a duplicate id/field name.
   const ignoreQ=document.getElementById('q81').closest('.q');
@@ -340,13 +345,30 @@ function applyTier(tier){
   // Scope to .section so the toggle buttons (also data-tier) aren't affected.
   document.querySelectorAll('.section[data-tier]').forEach(sec=>{
     const t=sec.dataset.tier;
-    const show = t==='standard-ignore' ? tier==='standard' : tier==='tailored';
+    const show = t==='standard-ignore' ? tier==='standard' : tier==='intake';
     sec.style.display = show ? '' : 'none';
     sec.querySelectorAll('input,textarea').forEach(el=>{ el.disabled=!show; });
   });
   document.querySelectorAll('.setup-btn').forEach(b=>b.classList.toggle('on', b.dataset.tier===tier));
   const pill=document.getElementById('time-pill');
   if(pill) pill.innerHTML=(tier==='standard'?'~7 minutes':'~20 minutes')+' &nbsp;·&nbsp; Gaps covered on the call &nbsp;·&nbsp; No tech needed';
+  // Intake-only expectation header — shown above the first section, never on Standard.
+  const callout=document.getElementById('intake-callout');
+  if(callout) callout.style.display = tier==='intake' ? '' : 'none';
+  // Completion action differs by tier: Standard submits and waits; Intake's
+  // submission is pre-work for a booked setup session (see handleSubmit).
+  const note=document.getElementById('submit-note');
+  const sbtn=document.getElementById('submit-btn');
+  const arrow='<svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2.5 7.5H12.5M12.5 7.5L8.5 3.5M12.5 7.5L8.5 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  if(note && sbtn){
+    if(tier==='standard'){
+      note.innerHTML="Hit submit and your answers go straight to Oscar.<br>He'll have your bot configured before the call.";
+      sbtn.innerHTML=arrow+'Submit Questionnaire';
+    }else{
+      note.innerHTML="We'll send your answers to Oscar as pre-work, then you pick a time for your setup session.";
+      sbtn.innerHTML=arrow+'Save answers &amp; book your session';
+    }
+  }
 }
 document.querySelectorAll('.setup-btn').forEach(b=>b.addEventListener('click',()=>applyTier(b.dataset.tier)));
 applyTier('standard');
@@ -409,6 +431,10 @@ async function handleSubmit(e){
   Object.keys(fields).forEach(k=>{ if(fields[k]===''||fields[k]==='Not specified') delete fields[k]; });
   fields.setup_type=document.getElementById('setup_type').value;
 
+  // Intake is a booked setup session: the submission is pre-work, and booking
+  // must go ahead even if that submission fails. Standard keeps submit-and-wait.
+  const isIntake = document.getElementById('setup_type').value === 'intake';
+
   try{
     const res = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
@@ -422,16 +448,48 @@ async function handleSubmit(e){
       })
     });
     const data = await res.json();
-    if (res.ok && data.success) {
+    const sent = res.ok && data.success;
+    if (isIntake) {
+      showBooking(businessName, sent);
+    } else if (sent) {
       showSuccess(businessName);
     } else {
       throw new Error('Form failed');
     }
   } catch(err){
-    btn.disabled=false;
-    btn.innerHTML='<svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2.5 7.5H12.5M12.5 7.5L8.5 3.5M12.5 7.5L8.5 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Submit Questionnaire';
-    errEl.style.display='block';
+    if (isIntake) {
+      // Never let a failed submission block the booking.
+      showBooking(businessName, false);
+    } else {
+      btn.disabled=false;
+      btn.innerHTML='<svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2.5 7.5H12.5M12.5 7.5L8.5 3.5M12.5 7.5L8.5 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Submit Questionnaire';
+      errEl.style.display='block';
+    }
   }
+}
+
+// Intake completion: booking the setup session is the priority action. The
+// Calendly link is always present; the answer-submission status only changes
+// the supporting line, never whether the user can book.
+function showBooking(name, sent){
+  const page=document.getElementById('page-content');
+  const first = name&&name!=='New Client' ? ', '+name.split(' ')[0] : '';
+  const status = sent
+    ? `Your answers are on their way to Oscar — he'll have them before your session.`
+    : `We couldn't send your answers automatically — email them to <a href="mailto:oscar@bury.com.au" style="color:var(--teal-dark);font-weight:600;text-decoration:none;">oscar@bury.com.au</a> when you can. You can still book your session now.`;
+  page.innerHTML=`
+    <div class="success-wrap">
+      <div class="success-icon">✓</div>
+      <h2 class="success-title">One more step${first}.</h2>
+      <p class="success-sub">${status}</p>
+      <a class="btn-primary" href="https://calendly.com/oscarcbury/30min" target="_blank" rel="noopener" style="text-decoration:none;">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2.5 7.5H12.5M12.5 7.5L8.5 3.5M12.5 7.5L8.5 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Book your setup session
+      </a>
+      <p class="success-detail" style="margin-top:26px;">Questions first? <a href="mailto:oscar@bury.com.au" style="color:var(--teal-dark);font-weight:600;text-decoration:none;">oscar@bury.com.au</a></p>
+    </div>
+  `;
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function showSuccess(name){
